@@ -15,17 +15,20 @@ class Hparams:
 
     # train
     ## files
-    parser.add_argument('--train', default='data/lscts/train.csv|data/sougou/train.csv',
+    parser.add_argument('--train', default='data/test.csv',
                              help="data for train")
 
-    parser.add_argument('--eval', default='data/lscts/test.csv',
+    parser.add_argument('--eval', default='data/test.csv',
                              help="data for evaluation")
-    parser.add_argument('--test', default='data/lscts/test_summary.csv',
+    parser.add_argument('--eval_rouge', default='data/test_summary.csv',
                              help="data for calculate rouge score")
 
     ## vocabulary
     parser.add_argument('--vocab', default='vocab',
                         help="vocabulary file path")
+
+    parser.add_argument('--stop_vocab', default='stop_vocab',
+                        help="stop vocabulary file path")
 
     # training scheme
     parser.add_argument('--batch_size', default=32, type=int)
@@ -33,7 +36,7 @@ class Hparams:
 
     parser.add_argument('--lr', default=0.0005, type=float, help="learning rate")
     parser.add_argument('--warmup_steps', default=4000, type=int)
-    parser.add_argument('--logdir', default="log/1", help="log directory")
+    parser.add_argument('--logdir', default="log/2", help="log directory")
     parser.add_argument('--num_epochs', default=5, type=int)
     parser.add_argument('--evaldir', default="eval/1", help="evaluation dir")
 
@@ -46,10 +49,12 @@ class Hparams:
                         help="number of encoder/decoder blocks")
     parser.add_argument('--num_heads', default=8, type=int,
                         help="number of attention heads")
-    parser.add_argument('--maxlen', default=128, type=int,
+    parser.add_argument('--maxlen1', default=150, type=int,
                         help="maximum length of a source sequence")
-    parser.add_argument('--maxlen', default=20, type=int,
+    parser.add_argument('--maxlen2', default=25, type=int,
                         help="maximum length of a target sequence")
     parser.add_argument('--dropout_rate', default=0.1, type=float)
     parser.add_argument('--beam_size', default=4, type=int,
                         help="beam size")
+    parser.add_argument('--gpu_nums', default=1, type=int,
+                        help="gpu amount, which can allow how many gpu to train this model")

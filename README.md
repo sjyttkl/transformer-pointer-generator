@@ -6,9 +6,9 @@ like github gitlab, I didn't find the official code, so I decided to implement i
 ## Requirements
 * python==3.x (Let's move on to python 3 if you still use python 2)
 * tensorflow==1.12.0
-* numpy>=1.15.4
-* sentencepiece==0.1.8
 * tqdm>=4.28.1
+* jieba>=0.3x
+* sumeval>=0.2.0
 
 ## Model Structure
 ### Based
@@ -25,16 +25,20 @@ in this model, I just use word than vocab, this idea is from bert.
 <img src="fig/structure.jpg">
 
 ## Training
-* STEP 1. [download](https://pan.baidu.com/s/1szq0Wa60AS5ISpM_SNPcbA) the dataset, pwd is ayn6, the dataset is LSCTS by pre processed, so you will see very different dataset structure with LSCTS in the file
-each line is abstract and article, they split by **","**, if you worry the amount of the dataset is different between my and LSCTS, don't 
-worry, the amout of the dataset is same as LSCTS. 
+* STEP 1. [download](https://pan.baidu.com/s/1szq0Wa60AS5ISpM_SNPcbA) the dataset, pwd is ayn6, the dataset is LCSTS by pre processed, so you will see very different dataset structure with LCSTS in the file
+each line is abstract and article, they split by **","**, if you worry the amount of the dataset is different between my and LCSTS, don't 
+worry, the amout of the dataset is same as LCSTS. 
 * STEP 2. Run the following command.
 ```
 python train.py
 ```
 Check `hparams.py` to see which parameters are possible. For example,
 ```
-python train.py --logdir myLog --batch_size 32 --train myTrain --eval myEval --test myTest
+python train.py --logdir myLog --batch_size 32 --train myTrain --eval myEval
+```
+My code also improve multi gpu to train this model, if you have more than one gpu, just run like this
+```
+python train.py --logdir myLog --batch_size 32 --train myTrain --eval myEval --gpu_nums=myGPUNums
 ```
 
 | name | type | detail |
@@ -55,20 +59,20 @@ d_model | int| hidden dimension of encoder/decoder
 d_ff | int| hidden dimension of feedforward layer
 num_blocks | int| number of encoder/decoder blocks
 num_heads | int| number of attention heads
-maxlen | int| maximum length of a source sequence
-maxlen | int| maximum length of a target sequence
+maxlen1 | int| maximum length of a source sequence
+maxlen2 | int| maximum length of a target sequence
 dropout_rate | float| dropout rate
 beam_size | int| beam size for decode
+gpu_nums | int| gpu amount, which can allow how many gpu to train this model， default 1
 ### Note
 Don't change the hyper-parameters of transformer util you have good solution, it will let the loss can't go down! if you have good solution, I hope you can tell me.
 
 ## Evaluation
 ### Loss
 * Transformer-Pointer generator
-<img src="fig/transformer-pointer gererator-loss.png">
+<img src="fig/transformer-pointer gererator-loss.png" />
 * Transformer 
-<img src="fig/transformer-loss.png">
+<img src="fig/transformer-loss.png" />
 As you see, transformer-pointer generator model can let the loss go down very quickly!
 
-## Todo
-Add rouge score
+## If you like it, and think it useful for you, hope you can star.
